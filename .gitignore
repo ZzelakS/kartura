@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.env
+.env.local
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+
+# Written by the Convex CLI, regenerated on every build
+convex/_generated
+.vercel
+.env*

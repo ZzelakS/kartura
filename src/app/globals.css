@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Dark is the default. `.light` on <html> flips the palette.
+ *
+ * Values are space-separated RGB channels rather than hex, so Tailwind's
+ * opacity modifiers keep working: border-linen/10 resolves correctly in both
+ * themes.
+ */
+:root {
+  --c-ink: 21 17 16;
+  --c-bark: 34 26 22;
+  --c-amber: 224 164 92;
+  --c-sage: 143 160 124;
+  --c-linen: 239 231 218;
+  --c-muted: 156 142 128;
+
+  --hero-veil: rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+.light {
+  /* Warm paper rather than white. Pure white next to Bodoni looks clinical. */
+  --c-ink: 244 240 232;
+  --c-bark: 232 225 213;
+  --c-amber: 158 100 38;
+  --c-sage: 88 101 72;
+  --c-linen: 38 30 25;
+  --c-muted: 112 100 88;
+
+  --hero-veil: rgba(244, 240, 232, 0.5);
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: rgb(var(--c-ink));
+  }
+
+  body {
+    background: rgb(var(--c-ink));
+    color: rgb(var(--c-linen));
+    -webkit-font-smoothing: antialiased;
+    /* The hero geometry is fitted to the viewport, but this guarantees no
+       sideways scroll on any narrow device. */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(var(--c-amber));
+    color: rgb(var(--c-ink));
+  }
+
+  :focus-visible {
+    outline: 1px solid rgb(var(--c-amber));
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Presentation refinements; commerce and animation behavior remain in their components. */
+@layer base {
+  section[id], main[id] { scroll-margin-top: 100px; }
+  button, a, input { -webkit-tap-highlight-color: transparent; }
+}
+.skip-link { position: fixed; top: 12px; left: 16px; z-index: 100; padding: 12px 20px; background: rgb(var(--c-linen)); color: rgb(var(--c-ink)); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+#fragrance > div, #bags > div { max-width: 1200px; }
+#fragrance h2, #bags h2, #house h2 { text-wrap: balance; }
+#fragrance article { padding-block: clamp(32px, 5vw, 64px); }
+#fragrance article img, #bags article img { transition: transform 500ms ease; }
+#fragrance .product-gallery > div:first-child { border: 1px solid rgb(var(--c-linen) / .09); }
+#house { border-top: 1px solid rgb(var(--c-linen) / .12); }
+.house-story-link { display: inline-flex; align-items: center; gap: 32px; margin-top: 28px; padding-block: 12px; border-bottom: 1px solid rgb(var(--c-amber) / .55); color: rgb(var(--c-amber)); font-size: 14px; }
+.house-story-link:hover { border-color: currentColor; }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: rgb(var(--c-amber)); }
+.story-hero { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 48px; padding: 170px max(6vw, 24px) 88px; border-bottom: 1px solid rgb(var(--c-linen) / .14); background: radial-gradient(ellipse at 90% 70%, rgb(var(--c-amber) / .1), transparent 60%), rgb(var(--c-bark)); }
+.story-hero-inner { max-width: 820px; }
+.story-hero h1 { margin-top: 26px; max-width: 12ch; font-family: var(--font-display), serif; font-size: clamp(54px, 7.5vw, 108px); font-weight: 400; letter-spacing: -.045em; line-height: 1.04; text-wrap: balance; }
+.story-subtitle { max-width: 38ch; margin-top: 30px; color: rgb(var(--c-muted)); font-size: clamp(17px, 2vw, 21px); line-height: 1.65; }
+.story-start { display: inline-flex; gap: 44px; margin-top: 38px; padding-block: 12px; border-bottom: 1px solid rgb(var(--c-amber) / .5); font-size: 13px; }
+.story-seal { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; width: clamp(180px, 23vw, 340px); aspect-ratio: 1; border: 1px solid rgb(var(--c-amber) / .3); border-radius: 50%; outline: 1px solid rgb(var(--c-amber) / .13); outline-offset: 16px; font: 400 clamp(90px, 12vw, 160px)/1 var(--font-display), serif; color: rgb(var(--c-amber)); }
+.story-seal span { margin-top: 18px; font: 400 10px var(--font-sans), sans-serif; letter-spacing: .18em; text-transform: uppercase; }
+.story-layout { display: grid; grid-template-columns: 250px minmax(0, 680px); justify-content: center; align-items: start; gap: clamp(40px, 8vw, 120px); max-width: 1280px; margin: auto; padding: 88px 32px 100px; }
+.story-index { position: sticky; top: 116px; }
+.story-index nav > p { margin-bottom: 22px; }
+.story-index a { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgb(var(--c-linen) / .12); font-size: 13px; line-height: 1.6; color: rgb(var(--c-muted)); }
+.story-index a:hover { color: rgb(var(--c-linen)); }
+.chapter-number { color: rgb(var(--c-amber)); font-size: 11px; padding-top: 2px; }
+.story-prose section + section { margin-top: 66px; padding-top: 48px; border-top: 1px solid rgb(var(--c-linen) / .16); }
+.story-prose h2 { margin: 18px 0 32px; font-family: var(--font-display), serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 400; line-height: 1.2; text-wrap: balance; }
+.story-prose p { white-space: pre-line; font-size: 17px; line-height: 1.95; margin-bottom: 22px; color: rgb(var(--c-linen) / .85); }
+.story-prose section:first-child > p:first-child { font-family: var(--font-display), serif; font-size: clamp(25px, 3vw, 32px); line-height: 1.5; color: rgb(var(--c-linen)); }
+.story-prose section:last-child > p:last-child { margin-top: 44px; font-family: var(--font-display), serif; font-size: 30px; line-height: 1.6; color: rgb(var(--c-amber)); }
+.story-end { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; padding: 44px max(6vw, 24px); border-top: 1px solid rgb(var(--c-linen) / .12); }
+.story-end > a { display: inline-flex; gap: 28px; padding-block: 12px; font-family: var(--font-display), serif; font-size: clamp(23px, 3vw, 32px); }
+@media (max-width: 767px) {
+  header nav { gap: 12px; }
+  header nav button { min-height: 44px; min-width: 44px; }
+  #mobile-menu nav { overflow-y: auto; justify-content: flex-start; padding-top: 24px; padding-bottom: 40px; }
+  #fragrance article button, #bags button { min-height: 44px; }
+  .story-hero { padding-top: 132px; padding-bottom: 56px; }
+  .story-seal { display: none; }
+  .story-layout { display: block; padding: 36px 24px 64px; }
+  .story-index { position: static; margin-bottom: 48px; }
+  .story-index a { padding-block: 12px; }
+  .story-prose p { font-size: 16px; line-height: 1.9; }
+}
+@media (min-width: 1024px) {
+  #fragrance .product-gallery { width: 280px; }
+}
+
+/* Brand imagery and editorial rhythm. */
+.hero-eyebrow { margin-bottom: 20px; }
+.hero-bottom { position: absolute; bottom: 34px; left: 48px; right: 92px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 12px; letter-spacing: .035em; }
+.hero-shop, .hero-scroll { display: inline-flex; gap: 24px; align-items: center; padding-block: 12px; }
+.hero-shop { border-bottom: 1px solid rgb(var(--c-amber) / .6); }
+.hero-scroll { color: rgb(var(--c-muted)); }
+.fragrance-feature { position: relative; z-index: 10; display: grid; grid-template-columns: 1fr 1fr; background: rgb(var(--c-bark)); border-block: 1px solid rgb(var(--c-linen) / .12); }
+.feature-photo { position: relative; background: #d5c5ae; overflow: hidden; }
+.feature-photo > img { display: block; width: 100%; height: 100%; max-height: 880px; min-height: 650px; object-fit: cover; object-position: center; }
+.photo-note { position: absolute; bottom: 26px; left: 28px; color: #3a2b19; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.feature-copy { padding: clamp(40px, 6vw, 96px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.feature-copy h2 { margin-top: 30px; font-family: var(--font-display), serif; font-size: clamp(44px, 5.3vw, 80px); line-height: 1.08; letter-spacing: -.035em; }
+.feature-copy h2 em, .house-copy h2 em { font-weight: 400; color: rgb(var(--c-amber)); }
+.feature-copy > p:not(.eyebrow) { max-width: 38ch; margin-top: 28px; font-size: 16px; line-height: 1.9; color: rgb(var(--c-muted)); }
+.brand-button { display: inline-flex; justify-content: space-between; align-items: center; gap: 36px; margin-top: 32px; padding: 16px 22px; font-size: 13px; background: rgb(var(--c-amber)); color: rgb(var(--c-ink)); border: 1px solid rgb(var(--c-amber)); transition: background 200ms; }
+.brand-button:hover { background: rgb(var(--c-linen)); border-color: rgb(var(--c-linen)); }
+.feature-footnote { width: 100%; margin-top: 56px; padding-top: 22px; border-top: 1px solid rgb(var(--c-linen) / .13); display: flex; justify-content: space-between; gap: 18px; font-size: 11px; color: rgb(var(--c-muted)); }
+.feature-footnote a { color: rgb(var(--c-linen)); }
+.house-editorial { display: grid; grid-template-columns: 1fr 1fr; padding: 88px max(5vw, 24px); gap: clamp(40px, 7vw, 100px); align-items: center; }
+.house-copy { max-width: 510px; margin-inline: auto; }
+.house-copy h2 { font-family: var(--font-display), serif; font-size: clamp(40px, 5vw, 72px); line-height: 1.15; margin-top: 24px; margin-bottom: 32px; letter-spacing: -.03em; }
+.house-copy > p:not(.eyebrow) { margin-top: 15px; font-size: 16px; line-height: 1.9; color: rgb(var(--c-muted)); }
+.house-photo img { width: 100%; height: auto; object-fit: cover; }
+.house-photo figcaption { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; color: rgb(var(--c-muted)); padding-top: 16px; }
+.footer-brand { display: block; width: 220px; height: 140px; background: transparent; overflow: hidden; margin-bottom: 24px; }
+.footer-brand img { width: 220px; height: 220px; max-width: none; transform: translateY(-40px); }
+.story-hero { padding: 130px max(5vw, 24px) 64px; gap: 6vw; }
+.story-hero-inner { flex: 1; }
+.story-hero h1 { font-size: clamp(50px, 6.5vw, 96px); }
+.story-hero-photo { width: 37%; max-width: 460px; flex-shrink: 0; }
+.story-hero-photo img { width: 100%; height: auto; }
+.story-brand { margin-top: 36px; width: 100%; overflow: hidden; background: transparent; }
+.story-brand img { width: 100%; height: auto; }
+.story-bar-photo { margin-bottom: 48px; }
+.story-bar-photo img { width: 100%; max-height: 680px; height: auto; object-fit: cover; object-position: center 65%; }
+.site-header nav a { transition: color 180ms; }
+@media (max-width: 1023px) and (min-width: 768px) {
+  .feature-copy { padding: 40px 28px; }
+  .feature-photo > img { min-height: 660px; }
+  .feature-footnote { flex-direction: column; }
+  .story-layout { grid-template-columns: 200px minmax(0, 1fr); gap: 40px; }
+}
+@media (max-width: 767px) {
+  .hero-eyebrow { margin-bottom: 14px; font-size: 10px; }
+  .hero-bottom { bottom: max(88px, calc(env(safe-area-inset-bottom) + 64px)); inset-inline: 22px; flex-wrap: wrap; justify-content: center; gap: 12px 24px; }
+  .hero-shop { font-size: 11px; gap: 12px; }
+  .hero-scroll { display: none; }
+  .fragrance-feature { grid-template-columns: 1fr; }
+  .feature-photo > img { height: auto; min-height: 0; max-height: none; aspect-ratio: 2 / 3; object-fit: cover; }
+  .feature-copy { padding: 48px 26px; }
+  .feature-copy h2 { font-size: clamp(44px, 11vw, 62px); }
+  .feature-footnote { margin-top: 40px; }
+  .house-editorial { grid-template-columns: 1fr; padding: 60px 24px; gap: 36px; }
+  .house-copy { margin-inline: 0; }
+  .house-photo img { aspect-ratio: 3 / 4; }
+  .story-hero { display: block; padding: 120px 24px 32px; }
+  .story-hero-photo { width: 100%; max-width: none; margin-top: 36px; }
+  .story-hero-photo img { max-height: 600px; object-fit: cover; object-position: center; }
+  .story-brand { display: none; }
+  .story-bar-photo { margin-inline: -24px; }
+}
