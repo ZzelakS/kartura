@@ -48,7 +48,7 @@ export default function About() {
             ))}
           </article>
         </div>
-        <div className="story-end"><span className="eyebrow">Karturah · Made to Resonate</span><a href="/#fragrance">Discover the fragrances <span aria-hidden="true">↗</span></a></div>
+        <div className="story-end"><span className="eyebrow">Karturah · Made to Resonate</span><a href="/#fragrance">Discover the fragrances <span aria-hidden="true"></span></a></div>
       </main>
       <SiteFooter />
       <CartDrawer />
