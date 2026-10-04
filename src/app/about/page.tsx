@@ -41,7 +41,7 @@ export default function About() {
           <article className="story-prose" aria-label={story.title}>
             {story.sections.map((section, i) => (
               <section id={`chapter-${i + 1}`} key={i} aria-label={section.title ?? "The beginning"}>
-                {i === 4 && <figure className="story-bar-photo"><Image src="/images/fragrance-bar.jpeg" alt="The illuminated Karturah Fragrance Bar" width={1087} height={1447} sizes="(max-width: 767px) 100vw, 680px" /></figure>}
+                {i === 4 && <figure className="story-bar-photo"><Image src="/images/fragrance-bar.png" alt="The illuminated Karturah Fragrance Bar" width={1087} height={1447} sizes="(max-width: 767px) 100vw, 680px" /></figure>}
                 {section.title && <><span className="eyebrow" aria-hidden="true">0{i + 1} / The journey</span><h2>{section.title}</h2></>}
                 {section.paragraphs.map((paragraph, j) => <p key={j}>{paragraph}</p>)}
               </section>
