@@ -1,0 +1,10 @@
+
+.env.local
+node_modules
+
+node_modules/
+.next/
+.env*
+!.env.example
+*.zip
+*.tsbuildinfo
