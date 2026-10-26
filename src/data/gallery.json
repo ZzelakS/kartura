@@ -1,0 +1,134 @@
+[
+  {
+    "id": "photo-10",
+    "type": "image",
+    "src": "/gallery/photo-10.jpeg",
+    "title": "Made to resonate"
+  },
+  {
+    "id": "photo-01",
+    "type": "image",
+    "src": "/gallery/photo-01.jpeg",
+    "title": "At the fragrance bar"
+  },
+  {
+    "id": "film-19",
+    "type": "video",
+    "src": "/gallery/film-19.mp4",
+    "title": "A Karturah moment"
+  },
+  {
+    "id": "photo-02",
+    "type": "image",
+    "src": "/gallery/photo-02.jpeg",
+    "title": "With love & gratitude"
+  },
+  {
+    "id": "photo-03",
+    "type": "image",
+    "src": "/gallery/photo-03.jpeg",
+    "title": "Create your scent"
+  },
+  {
+    "id": "photo-04",
+    "type": "image",
+    "src": "/gallery/photo-04.jpeg",
+    "title": "The finishing touches"
+  },
+  {
+    "id": "photo-05",
+    "type": "image",
+    "src": "/gallery/photo-05.jpeg",
+    "title": "A spectrum of fragrance"
+  },
+  {
+    "id": "film-20",
+    "type": "video",
+    "src": "/gallery/film-20.mp4",
+    "title": "A Karturah moment"
+  },
+  {
+    "id": "photo-06",
+    "type": "image",
+    "src": "/gallery/photo-06.jpeg",
+    "title": "Something to remember"
+  },
+  {
+    "id": "photo-07",
+    "type": "image",
+    "src": "/gallery/photo-07.jpeg",
+    "title": "Wrapped with care"
+  },
+  {
+    "id": "photo-08",
+    "type": "image",
+    "src": "/gallery/photo-08.jpeg",
+    "title": "A gift for every guest"
+  },
+  {
+    "id": "photo-09",
+    "type": "image",
+    "src": "/gallery/photo-09.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "film-21",
+    "type": "video",
+    "src": "/gallery/film-21.mp4",
+    "title": "A Karturah moment"
+  },
+  {
+    "id": "photo-11",
+    "type": "image",
+    "src": "/gallery/photo-11.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "photo-12",
+    "type": "image",
+    "src": "/gallery/photo-12.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "photo-13",
+    "type": "image",
+    "src": "/gallery/photo-13.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "photo-14",
+    "type": "image",
+    "src": "/gallery/photo-14.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "film-22",
+    "type": "video",
+    "src": "/gallery/film-22.mp4",
+    "title": "A Karturah moment"
+  },
+  {
+    "id": "photo-15",
+    "type": "image",
+    "src": "/gallery/photo-15.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "photo-16",
+    "type": "image",
+    "src": "/gallery/photo-16.jpeg",
+    "title": "A personal signature"
+  },
+  {
+    "id": "photo-17",
+    "type": "image",
+    "src": "/gallery/photo-17.jpeg",
+    "title": "Little keepsakes"
+  },
+  {
+    "id": "photo-18",
+    "type": "image",
+    "src": "/gallery/photo-18.jpeg",
+    "title": "The Karturah experience"
+  }
+]

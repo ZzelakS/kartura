@@ -1,0 +1,393 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Victorian revamp: rich, ornate, classic — not the white Victoria look.
+ * Dark is the default. `.light` on <html> flips the palette.
+ *
+ * Values are space-separated RGB channels rather than hex, so Tailwind's
+ * opacity modifiers keep working: border-linen/10 resolves correctly in both
+ * themes.
+ */
+:root {
+  --c-ink: 26 18 20;
+  --c-bark: 40 27 29;
+  --c-amber: 201 168 106;
+  --c-sage: 143 160 124;
+  --c-linen: 242 234 220;
+  --c-muted: 178 164 148;
+
+  --hero-veil: rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+.light {
+  /* Cream paper, deep burgundy text, darker gold — Victorian in daylight. */
+  --c-ink: 248 244 232;
+  --c-bark: 238 230 214;
+  --c-amber: 150 110 50;
+  --c-sage: 88 101 72;
+  --c-linen: 40 28 30;
+  --c-muted: 110 95 85;
+
+  --hero-veil: rgba(248, 244, 232, 0.5);
+  color-scheme: light;
+}
+
+/* Victorian detailing: wider-spaced eyebrows, a gold diamond ornament,
+   and a double-framed button — ornate, not plain. */
+.eyebrow { letter-spacing: .28em; }
+.victorian-ornament { margin-top: 16px; color: rgb(var(--c-amber)); font-size: 13px; letter-spacing: .5em; }
+.brand-button { outline: 1px solid rgb(var(--c-amber) / .35); outline-offset: 5px; }
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: rgb(var(--c-ink));
+  }
+
+  body {
+    background: rgb(var(--c-ink));
+    color: rgb(var(--c-linen));
+    -webkit-font-smoothing: antialiased;
+    /* The hero geometry is fitted to the viewport, but this guarantees no
+       sideways scroll on any narrow device. */
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgb(var(--c-amber));
+    color: rgb(var(--c-ink));
+  }
+
+  :focus-visible {
+    outline: 1px solid rgb(var(--c-amber));
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Presentation refinements; commerce and animation behavior remain in their components. */
+@layer base {
+  section[id], main[id] { scroll-margin-top: 100px; }
+  button, a, input { -webkit-tap-highlight-color: transparent; }
+}
+.skip-link { position: fixed; top: 12px; left: 16px; z-index: 100; padding: 12px 20px; background: rgb(var(--c-linen)); color: rgb(var(--c-ink)); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+#fragrance > div, #bags > div { max-width: 1200px; }
+#fragrance h2, #bags h2, #house h2 { text-wrap: balance; }
+#fragrance article { padding-block: clamp(32px, 5vw, 64px); }
+#fragrance article img, #bags article img { transition: transform 500ms ease; }
+#fragrance .product-gallery > div:first-child { border: 1px solid rgb(var(--c-linen) / .09); }
+#house { border-top: 1px solid rgb(var(--c-linen) / .12); }
+.house-story-link { display: inline-flex; align-items: center; gap: 32px; margin-top: 28px; padding-block: 12px; border-bottom: 1px solid rgb(var(--c-amber) / .55); color: rgb(var(--c-amber)); font-size: 14px; }
+.house-story-link:hover { border-color: currentColor; }
+.eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: rgb(var(--c-amber)); }
+.story-hero { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 48px; padding: 170px max(6vw, 24px) 88px; border-bottom: 1px solid rgb(var(--c-linen) / .14); background: radial-gradient(ellipse at 90% 70%, rgb(var(--c-amber) / .1), transparent 60%), rgb(var(--c-bark)); }
+.story-hero-inner { max-width: 820px; }
+.story-hero h1 { margin-top: 26px; max-width: 12ch; font-family: var(--font-display), serif; font-size: clamp(54px, 7.5vw, 108px); font-weight: 400; letter-spacing: -.045em; line-height: 1.04; text-wrap: balance; }
+.story-subtitle { max-width: 38ch; margin-top: 30px; color: rgb(var(--c-muted)); font-size: clamp(17px, 2vw, 21px); line-height: 1.65; }
+.story-start { display: inline-flex; gap: 44px; margin-top: 38px; padding-block: 12px; border-bottom: 1px solid rgb(var(--c-amber) / .5); font-size: 13px; }
+.story-seal { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; width: clamp(180px, 23vw, 340px); aspect-ratio: 1; border: 1px solid rgb(var(--c-amber) / .3); border-radius: 50%; outline: 1px solid rgb(var(--c-amber) / .13); outline-offset: 16px; font: 400 clamp(90px, 12vw, 160px)/1 var(--font-display), serif; color: rgb(var(--c-amber)); }
+.story-seal span { margin-top: 18px; font: 400 10px var(--font-sans), sans-serif; letter-spacing: .18em; text-transform: uppercase; }
+.story-layout { display: grid; grid-template-columns: 250px minmax(0, 680px); justify-content: center; align-items: start; gap: clamp(40px, 8vw, 120px); max-width: 1280px; margin: auto; padding: 88px 32px 100px; }
+.story-index { position: sticky; top: 116px; }
+.story-index nav > p { margin-bottom: 22px; }
+.story-index a { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgb(var(--c-linen) / .12); font-size: 13px; line-height: 1.6; color: rgb(var(--c-muted)); }
+.story-index a:hover { color: rgb(var(--c-linen)); }
+.chapter-number { color: rgb(var(--c-amber)); font-size: 11px; padding-top: 2px; }
+.story-prose section + section { margin-top: 66px; padding-top: 48px; border-top: 1px solid rgb(var(--c-linen) / .16); }
+.story-prose h2 { margin: 18px 0 32px; font-family: var(--font-display), serif; font-size: clamp(30px, 3.5vw, 44px); font-weight: 400; line-height: 1.2; text-wrap: balance; }
+.story-prose p { white-space: pre-line; font-size: 17px; line-height: 1.95; margin-bottom: 22px; color: rgb(var(--c-linen) / .85); }
+.story-prose section:first-child > p:first-child { font-family: var(--font-display), serif; font-size: clamp(25px, 3vw, 32px); line-height: 1.5; color: rgb(var(--c-linen)); }
+.story-prose section:last-child > p:last-child { margin-top: 44px; font-family: var(--font-display), serif; font-size: 30px; line-height: 1.6; color: rgb(var(--c-amber)); }
+.story-end { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; padding: 44px max(6vw, 24px); border-top: 1px solid rgb(var(--c-linen) / .12); }
+.story-end > a { display: inline-flex; gap: 28px; padding-block: 12px; font-family: var(--font-display), serif; font-size: clamp(23px, 3vw, 32px); }
+@media (max-width: 767px) {
+  header nav { gap: 12px; }
+  header nav button { min-height: 44px; min-width: 44px; }
+  #mobile-menu nav { overflow-y: auto; justify-content: flex-start; padding-top: 24px; padding-bottom: 40px; }
+  #fragrance article button, #bags button { min-height: 44px; }
+  .story-hero { padding-top: 132px; padding-bottom: 56px; }
+  .story-seal { display: none; }
+  .story-layout { display: block; padding: 36px 24px 64px; }
+  .story-index { position: static; margin-bottom: 48px; }
+  .story-index a { padding-block: 12px; }
+  .story-prose p { font-size: 16px; line-height: 1.9; }
+}
+@media (min-width: 1024px) {
+  #fragrance .product-gallery { width: 280px; }
+}
+
+/* Brand imagery and editorial rhythm. */
+.hero-eyebrow { margin-bottom: 20px; }
+.hero-bottom { position: absolute; bottom: 34px; left: 48px; right: 92px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 12px; letter-spacing: .035em; }
+.hero-shop, .hero-scroll { display: inline-flex; gap: 24px; align-items: center; padding-block: 12px; }
+.hero-shop { border-bottom: 1px solid rgb(var(--c-amber) / .6); }
+.hero-scroll { color: rgb(var(--c-muted)); }
+.fragrance-feature { position: relative; z-index: 10; display: grid; grid-template-columns: 1fr 1fr; background: rgb(var(--c-bark)); border-block: 1px solid rgb(var(--c-linen) / .12); }
+.feature-photo { position: relative; background: #d5c5ae; overflow: hidden; }
+.feature-photo > img { display: block; width: 100%; height: 100%; max-height: 880px; min-height: 650px; object-fit: cover; object-position: center; }
+.photo-note { position: absolute; bottom: 26px; left: 28px; color: #3a2b19; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.feature-copy { padding: clamp(40px, 6vw, 96px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.feature-copy h2 { margin-top: 30px; font-family: var(--font-display), serif; font-size: clamp(44px, 5.3vw, 80px); line-height: 1.08; letter-spacing: -.035em; }
+.feature-copy h2 em, .house-copy h2 em { font-weight: 400; color: rgb(var(--c-amber)); }
+.feature-copy > p:not(.eyebrow) { max-width: 38ch; margin-top: 28px; font-size: 16px; line-height: 1.9; color: rgb(var(--c-muted)); }
+.brand-button { display: inline-flex; justify-content: space-between; align-items: center; gap: 36px; margin-top: 32px; padding: 16px 22px; font-size: 13px; background: rgb(var(--c-amber)); color: rgb(var(--c-ink)); border: 1px solid rgb(var(--c-amber)); transition: background 200ms; }
+.brand-button:hover { background: rgb(var(--c-linen)); border-color: rgb(var(--c-linen)); }
+.feature-footnote { width: 100%; margin-top: 56px; padding-top: 22px; border-top: 1px solid rgb(var(--c-linen) / .13); display: flex; justify-content: space-between; gap: 18px; font-size: 11px; color: rgb(var(--c-muted)); }
+.feature-footnote a { color: rgb(var(--c-linen)); }
+.house-editorial { display: grid; grid-template-columns: 1fr 1fr; padding: 88px max(5vw, 24px); gap: clamp(40px, 7vw, 100px); align-items: center; }
+.house-copy { max-width: 510px; margin-inline: auto; }
+.house-copy h2 { font-family: var(--font-display), serif; font-size: clamp(40px, 5vw, 72px); line-height: 1.15; margin-top: 24px; margin-bottom: 32px; letter-spacing: -.03em; }
+.house-copy > p:not(.eyebrow) { margin-top: 15px; font-size: 16px; line-height: 1.9; color: rgb(var(--c-muted)); }
+.house-photo img { width: 100%; height: auto; object-fit: cover; }
+.house-photo figcaption { display: flex; justify-content: space-between; gap: 16px; font-size: 11px; color: rgb(var(--c-muted)); padding-top: 16px; }
+.footer-brand { display: block; width: 220px; height: 140px; background: transparent; overflow: hidden; margin-bottom: 24px; }
+.footer-brand img { width: 220px; height: 220px; max-width: none; transform: translateY(-40px); }
+.story-hero { padding: 130px max(5vw, 24px) 64px; gap: 6vw; }
+.story-hero-inner { flex: 1; }
+.story-hero h1 { font-size: clamp(50px, 6.5vw, 96px); }
+.story-hero-photo { width: 37%; max-width: 460px; flex-shrink: 0; }
+.story-hero-photo img { width: 100%; height: auto; }
+.story-brand { margin-top: 36px; width: 100%; overflow: hidden; background: transparent; }
+.story-brand img { width: 100%; height: auto; }
+.story-bar-photo { margin-bottom: 48px; }
+.story-bar-photo img { width: 100%; max-height: 680px; height: auto; object-fit: cover; object-position: center 65%; }
+.site-header nav a { transition: color 180ms; }
+@media (max-width: 1023px) and (min-width: 768px) {
+  .feature-copy { padding: 40px 28px; }
+  .feature-photo > img { min-height: 660px; }
+  .feature-footnote { flex-direction: column; }
+  .story-layout { grid-template-columns: 200px minmax(0, 1fr); gap: 40px; }
+}
+@media (max-width: 767px) {
+  .hero-eyebrow { margin-bottom: 14px; font-size: 10px; }
+  .hero-bottom { bottom: max(88px, calc(env(safe-area-inset-bottom) + 64px)); inset-inline: 22px; flex-wrap: wrap; justify-content: center; gap: 12px 24px; }
+  .hero-shop { font-size: 11px; gap: 12px; }
+  .hero-scroll { display: none; }
+  .fragrance-feature { grid-template-columns: 1fr; }
+  .feature-photo > img { height: auto; min-height: 0; max-height: none; aspect-ratio: 2 / 3; object-fit: cover; }
+  .feature-copy { padding: 48px 26px; }
+  .feature-copy h2 { font-size: clamp(44px, 11vw, 62px); }
+  .feature-footnote { margin-top: 40px; }
+  .house-editorial { grid-template-columns: 1fr; padding: 60px 24px; gap: 36px; }
+  .house-copy { margin-inline: 0; }
+  .house-photo img { aspect-ratio: 3 / 4; }
+  .story-hero { display: block; padding: 120px 24px 32px; }
+  .story-hero-photo { width: 100%; max-width: none; margin-top: 36px; }
+  .story-hero-photo img { max-height: 600px; object-fit: cover; object-position: center; }
+  .story-brand { display: none; }
+  .story-bar-photo { margin-inline: -24px; }
+}
+
+/* Noir & Or — the Karturah atelier edition. */
+:root, .light { --c-ink: 9 9 9; --c-bark: 18 18 16; --c-amber: 213 181 112; --c-sage: 183 163 116; --c-linen: 243 238 224; --c-muted: 164 160 149; color-scheme: dark; }
+.victorian-ornament { display: none; }
+.brand-button { outline: none; }
+.site-header { background: #090909f2 !important; border-bottom: 1px solid #d5b57030 !important; }
+.site-header > a { color: #d5b570; }
+.header-discover { border: 1px solid #d5b57080; padding: 10px 16px; color: #d5b570; font-size: 11px; }
+.atelier-hero { padding-top: 80px; display: grid; grid-template-columns: 1.1fr 1fr; }
+.atelier-copy { padding: clamp(56px,8vw,120px) 5vw 36px; display: flex; flex-direction: column; align-items: flex-start; }
+.atelier-copy h1 { margin-top: 40px; font: 400 clamp(58px,6.9vw,112px)/1.07 var(--font-display),serif; letter-spacing: -.055em; }
+.atelier-copy h1 em { color: #d5b570; font-weight: 400; }
+.atelier-intro { margin-top: 30px; color: #aaa698; font-size: 17px; line-height: 1.8; }
+.atelier-button { display: inline-flex; align-items: center; gap: 42px; padding: 17px 22px; background: #d5b570; color: #111; margin-top: 38px; font-size: 13px; }
+.atelier-button:hover { background: #f3e2b8; }
+.atelier-caption { display: flex; justify-content: space-between; gap: 24px; width: 100%; margin-top: auto; padding-top: 76px; color: #938b78; font-size: 10px; letter-spacing: .13em; }
+.atelier-image { position: relative; overflow: hidden; min-height: 610px; background: #1b1710; }
+.atelier-image img { width: 100%; height: 100%; position: absolute; object-fit: cover; object-position: center 54%; filter: brightness(.76) contrast(1.12); }
+.atelier-image::after { content: ''; position: absolute; inset: 18px; border: 1px solid #f5d99845; pointer-events: none; }
+.atelier-image figcaption { position: absolute; bottom: 40px; left: 40px; right: 40px; text-align: center; font-size: 9px; letter-spacing: .2em; color: #fff0cd; }
+.image-mark { position: absolute; right: 35px; top: 24px; font: 42px var(--font-display),serif; color: #f7deb4; }
+.atelier-ribbon { grid-column: 1/-1; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; padding: 23px; border-block: 1px solid #d5b57035; background: #11110f; color: #c7b68b; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
+.scent-library { padding: 100px 5vw; max-width: 1600px; margin: auto; }
+.library-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 48px; }
+.library-heading h2 { font: 400 clamp(42px,5vw,76px)/1.15 var(--font-display),serif; letter-spacing: -.045em; margin-top: 18px; }
+.library-heading h2 em { color: #d5b570; }
+.library-heading > p { color: #aaa698; font-size: 14px; line-height: 1.9; }
+.library-heading > p span { color: #d5b570; font-size: 12px; }
+.hero-scent { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #d5b57060; background: radial-gradient(ellipse at 10% 100%, #d5b5701c, transparent 65%), #15140f; margin-bottom: 48px; }
+.hero-scent-title, .hero-scent-copy { padding: 44px; }
+.hero-scent-title { border-right: 1px solid #d5b57030; }
+.hero-scent h3 { margin: 20px 0; font: 400 clamp(40px,4vw,64px) var(--font-display),serif; }
+.hero-scent h3 span { display: inline-block; margin-left: 28px; color: #d5b570; font-size: 28px; }
+.hero-scent-title > p:last-child { color: #aaa698; font-size: 13px; }
+.hero-scent-copy > p:nth-child(2) { margin-top: 18px; line-height: 1.8; font-size: 17px; }
+.spotlight-notes { margin-top: 16px; color: #aaa698; font-size: 12px; line-height: 1.8; }
+.hero-scent-copy a { display: inline-block; margin-top: 26px; color: #d5b570; font-size: 12px; border-bottom: 1px solid #d5b57080; padding-bottom: 7px; }
+.library-tools { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 22px; border-block: 1px solid #d5b57030; scroll-margin-top: 100px; }
+.scent-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.scent-filters button { padding: 11px 15px; font-size: 12px; color: #aaa698; border: 1px solid transparent; }
+.scent-filters button[aria-pressed=true] { border-color: #d5b57070; color: #d5b570; background: #d5b5700c; }
+.scent-filters button:hover { color: #eee2c8; }
+.scent-search { display: flex; align-items: center; border-bottom: 1px solid #77705b; min-width: 260px; }
+.scent-search input { background: transparent; width: 100%; padding: 12px 0; font-size: 12px; }
+.scent-search span { color: #d5b570; font-size: 24px; }
+.result-count { margin: 24px 0; font-size: 11px; color: #938b78; letter-spacing: .08em; }
+.scent-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+#fragrance article.scent-card { padding: 28px; border: 1px solid #d5b57028; background: #10100e; display: flex; flex-direction: column; transition: border-color .2s,background .2s; }
+#fragrance article.scent-card:hover { background: #181710; border-color: #d5b57080; }
+.scent-meta { display: flex; justify-content: space-between; gap: 12px; color: #938b78; font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
+.scent-meta span:last-child { color: #c8af78; white-space: nowrap; }
+.scent-card h3 { font: 400 29px/1.3 var(--font-display),serif; letter-spacing: -.02em; margin-top: 30px; }
+.scent-feeling { margin: 14px 0 26px; color: #b3ac9c; line-height: 1.8; font-size: 14px; flex: 1; }
+.scent-card details { border-block: 1px solid #d5b57025; }
+.scent-card summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; padding: 14px 0; font-size: 11px; color: #d5b570; }
+.scent-card summary::-webkit-details-marker { display: none; }
+.scent-card details[open] summary span { transform: rotate(45deg); }
+.scent-notes { padding-bottom: 18px; font-size: 13px; line-height: 1.9; color: #bbb29f; }
+.scent-enquiry { display: flex; justify-content: space-between; padding-top: 19px; font-size: 11px; color: #a49d8b; }
+.scent-enquiry:hover { color: #d5b570; }
+#fragrance article.signature-card { border-color: #d5b57080; }
+.library-note { text-align: center; margin-top: 38px; font-size: 12px; color: #938b78; }
+.empty-scents { padding: 70px 24px; text-align: center; color: #aaa698; }
+.empty-scents button { margin-top: 20px; color: #d5b570; text-decoration: underline; }
+#fragrance-bar, #favors, #bags, #contact { border-top: 1px solid #d5b57030; }
+#fragrance-bar h2, #favors h2, #bags h2, #contact h2 { margin-top: 20px; }
+@media (max-width: 1100px) { .scent-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .library-tools { align-items: stretch; flex-direction: column; } .scent-search { max-width: 420px; } .atelier-copy { padding-top: 70px; } .atelier-image { min-height: 590px; } }
+@media (max-width: 767px) { .atelier-hero { grid-template-columns: 1fr; padding-top: 78px; } .atelier-copy { padding: 52px 24px 32px; } .atelier-copy h1 { font-size: clamp(56px,12vw,86px); margin-top: 28px; } .atelier-intro { font-size: 15px; } .atelier-caption { padding-top: 40px; font-size: 8px; } .atelier-image { min-height: 0; height: 450px; } .atelier-image img { object-position: center 59%; } .atelier-ribbon { font-size: 8px; gap: 12px; } .atelier-ribbon span:last-child { display: none; } .scent-library { padding: 60px 24px; } .library-heading { display: block; } .library-heading > p { margin-top: 24px; } .hero-scent { grid-template-columns: 1fr; } .hero-scent-title { border-right: 0; border-bottom: 1px solid #d5b57030; } .hero-scent-title, .hero-scent-copy { padding: 28px; } .scent-grid { grid-template-columns: 1fr; } .scent-filters { gap: 4px; } .scent-filters button { padding: 10px; font-size: 11px; } .header-discover { display: none; } }
+
+/* Larger, more readable type throughout the atelier. */
+body { font-size: 17px; }
+.eyebrow { font-size: 13px; }
+.site-header nav { font-size: 15px; }
+.site-header > a { font-size: 26px; }
+.header-discover { font-size: 13px; }
+.atelier-intro { font-size: 20px; }
+.atelier-button { font-size: 16px; }
+.atelier-caption { font-size: 12px; }
+.atelier-image figcaption { font-size: 11px; }
+.atelier-ribbon { font-size: 13px; }
+.library-heading > p { font-size: 17px; }
+.library-heading > p span { font-size: 15px; }
+.hero-scent-title > p:last-child { font-size: 16px; }
+.hero-scent-copy > p:nth-child(2) { font-size: 20px; }
+.spotlight-notes { font-size: 15px; }
+.hero-scent-copy a { font-size: 15px; }
+.scent-filters button, .scent-search input { font-size: 15px; }
+.scent-search { min-width: 300px; }
+.result-count { font-size: 14px; }
+.scent-meta { font-size: 11px; line-height: 1.7; flex-wrap: wrap; }
+.scent-card h3 { font-size: 36px; }
+.scent-feeling { font-size: 17px; }
+.scent-card summary, .scent-enquiry { font-size: 14px; }
+.scent-notes { font-size: 16px; }
+.library-note { font-size: 15px; }
+#fragrance-bar p, #fragrance-bar li, #favors p, #favors li, #bags p, #house p, #contact p, #faq p { font-size: 17px; }
+#fragrance-bar a, #favors a, #contact a { font-size: 15px; }
+@media (max-width: 767px) {
+ .eyebrow { font-size: 12px; }
+ .atelier-intro { font-size: 18px; }
+ .atelier-caption { font-size: 10px; letter-spacing: .06em; }
+ .atelier-ribbon { font-size: 11px; }
+ .scent-filters button { font-size: 14px; padding: 12px; }
+ .scent-search { min-width: 0; width: 100%; }
+ .scent-card h3 { font-size: 34px; }
+ .scent-meta { font-size: 11px; }
+ .hero-scent-copy > p:nth-child(2) { font-size: 18px; }
+}
+
+/* Collapsible scent index, progressively revealed in groups of five. */
+.collection-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; scroll-margin-top: 100px; margin-bottom: 20px; }
+.collection-toggle { display: inline-flex; align-items: center; gap: 24px; min-height: 48px; font-size: 15px; color: #d5b570; }
+.collection-toggle span { font-size: 24px; }
+.scent-list { border-top: 1px solid #d5b57040; }
+.scent-entry { border-bottom: 1px solid #d5b57040; background: #10100e; }
+.scent-entry > summary { display: flex; align-items: center; gap: 28px; padding: 26px 28px; cursor: pointer; list-style: none; }
+.scent-entry > summary::-webkit-details-marker { display: none; }
+.scent-entry > summary:hover { background: #19170f; }
+.scent-entry-code { color: #d5b570; font-size: 14px; flex-shrink: 0; }
+.scent-entry-name { flex: 1; font: 400 34px/1.3 var(--font-display),serif; }
+.scent-entry-category { display: block; margin-top: 6px; font: 14px/1.5 var(--font-sans),sans-serif; color: #a49d8b; }
+.scent-entry-status { font-size: 12px; color: #c8af78; letter-spacing: .08em; }
+.scent-entry-symbol { color: #d5b570; font-size: 26px; transition: transform .2s; }
+.scent-entry[open] .scent-entry-symbol { transform: rotate(45deg); }
+.scent-entry[open] { background: #181710; }
+.scent-entry-body { padding: 0 28px 28px 107px; max-width: 1000px; }
+.scent-entry-body .scent-feeling { margin-top: 0; font-size: 18px; }
+.scent-entry-body .scent-notes { margin-top: 12px; font-size: 17px; }
+.scent-entry-body .scent-enquiry { display: inline-block; border-top: 1px solid #d5b57035; font-size: 15px; color: #d5b570; }
+.load-more-row { text-align: center; margin-top: 32px; }
+.load-more-scents { padding: 14px 38px; min-height: 48px; border: 1px solid #d5b570; color: #d5b570; font-size: 16px; }
+.load-more-scents:hover { background: #d5b570; color: #111; }
+.load-more-row p { margin-top: 12px; color: #a49d8b; font-size: 14px; }
+@media (max-width: 767px) {
+ .scent-entry > summary { gap: 14px; padding: 22px 16px; flex-wrap: wrap; }
+ .scent-entry-code { font-size: 12px; }
+ .scent-entry-name { font-size: 28px; min-width: 140px; }
+ .scent-entry-status { order: 4; width: 100%; font-size: 11px; }
+ .scent-entry-body { padding: 0 20px 26px; }
+ .scent-entry-body .scent-feeling { font-size: 17px; }
+ .collection-toggle-row { gap: 12px; }
+ .collection-toggle { font-size: 14px; gap: 12px; }
+}
+
+/* A quieter, more refined atelier: restrained gold, generous space, soft motion. */
+.atelier-copy { background: radial-gradient(ellipse at 0 20%, #d5b5700b, transparent 65%); }
+.atelier-copy h1 { letter-spacing: -.045em; }
+.atelier-copy > .eyebrow { display: flex; align-items: center; gap: 16px; }
+.atelier-copy > .eyebrow::before { content: ''; width: 36px; height: 1px; background: #d5b57085; }
+.atelier-button { background: linear-gradient(115deg, #baa069, #e6ce98, #c4a66a); padding: 18px 30px; letter-spacing: .035em; border: 1px solid #ead6aa80; transition: box-shadow .35s, transform .35s, filter .35s; }
+.atelier-button:hover { transform: translateY(-3px); box-shadow: 0 8px 36px #d5b57020; filter: brightness(1.08); }
+.atelier-image img { animation: atelier-image-arrive 1.8s ease-out both; }
+.atelier-copy > .eyebrow { animation: atelier-arrive .9s ease-out both; }
+.atelier-copy h1 { animation: atelier-arrive 1.1s .12s ease-out both; }
+.atelier-intro { animation: atelier-arrive 1.1s .24s ease-out both; }
+.atelier-button { animation: atelier-arrive 1.1s .36s ease-out both; }
+.atelier-image::after { inset: 24px; border-color: #f5d99840; }
+.atelier-ribbon { padding-block: 28px; background: #0e0e0c; }
+.library-heading { margin-bottom: 58px; }
+.hero-scent { position: relative; overflow: hidden; border-color: #d5b57045; background: radial-gradient(ellipse at 0 100%, #d5b57019, transparent 70%), #12120f; }
+.hero-scent::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(110deg, transparent 25%, #d5b57008 45%, transparent 65%); background-size: 240% 100%; animation: atelier-sheen 16s ease-in-out infinite; }
+.hero-scent-title, .hero-scent-copy { padding: clamp(32px,4.5vw,64px); }
+.scent-entry { background: transparent; transition: background .35s, border-color .35s; }
+.scent-entry > summary { padding-block: 30px; transition: background .35s; }
+.scent-entry-name { transition: color .3s; }
+.scent-entry > summary:hover .scent-entry-name { color: #e3cc98; }
+.scent-entry[open] { background: #d5b57007; border-color: #d5b57075; }
+.scent-entry[open] .scent-entry-body { animation: atelier-details .4s ease-out both; }
+.scent-entry-body { padding-bottom: 36px; }
+.scent-entry-category { letter-spacing: .04em; }
+.scent-entry-symbol { font-weight: 300; }
+.scent-enquiry, .hero-scent-copy a, .house-story-link, .site-header nav a { transition: color .25s, border-color .25s; text-underline-offset: 6px; }
+.scent-enquiry:hover, .hero-scent-copy a:hover { color: #f1dcaf; text-decoration: underline; }
+.scent-filters button { transition: background .25s, border-color .25s, color .25s; }
+.load-more-scents { transition: background .3s, color .3s, box-shadow .3s; letter-spacing: .06em; }
+.load-more-scents:hover { box-shadow: 0 0 32px #d5b57012; }
+#fragrance-bar, #favors, #contact { padding-top: 100px; padding-bottom: 100px; background-image: radial-gradient(ellipse at 100% 0, #d5b57006, transparent 60%); }
+@keyframes atelier-arrive { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes atelier-image-arrive { from { opacity: .3; transform: scale(1.04); } to { opacity: 1; transform: scale(1); } }
+@keyframes atelier-details { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes atelier-sheen { 0%, 100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+@supports (animation-timeline: view()) {
+ .library-heading, .hero-scent, #fragrance-bar > div, #favors > div, .house-copy, #contact > div { animation: atelier-arrive linear both; animation-timeline: view(); animation-range: entry 0% entry 22%; }
+}
+@media (max-width: 767px) {
+ .atelier-image::after { inset: 16px; }
+ .hero-scent-title, .hero-scent-copy { padding: 30px 26px; }
+ .scent-entry > summary { padding-block: 25px; }
+ #fragrance-bar, #favors, #contact { padding-top: 64px; padding-bottom: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+ .atelier-button:hover { transform: none; }
+}
+
+.gold-wave-layer { position: fixed; inset: 0; z-index: 20; pointer-events: none; overflow: hidden; background: radial-gradient(ellipse at 0 65%, #d5b57006, transparent 28%), radial-gradient(ellipse at 100% 30%, #d5b57006, transparent 26%); }
+.gold-wave-layer canvas { display: block; width: 100%; height: 100%; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .gold-wave-layer canvas { display: none; } }
