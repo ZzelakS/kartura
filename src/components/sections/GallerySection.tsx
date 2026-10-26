@@ -11,7 +11,7 @@ export default function GallerySection() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
-  const touchX = useRef<number | null>(null);
+  const touchX = useRef<{ x: number; y: number } | null>(null);
   const items = media.filter(item => filter === "all" || item.type === filter);
   const index = items.findIndex(item => item.id === activeId);
   const active = items[index];
@@ -45,7 +45,7 @@ export default function GallerySection() {
         <div className={styles.filters} role="group" aria-label="Filter gallery">
           {([['all', 'All moments'], ['image', 'Photographs'], ['video', 'Films']] as const).map(([value, label]) => <button key={value} type="button" aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}<span>{value === 'all' ? media.length : media.filter(item => item.type === value).length}</span></button>)}
         </div>
-        <span className={styles.hint}>Select a moment to explore ↗</span>
+        <span className={styles.hint}>Select a moment to explore</span>
       </div>
       <div className={styles.masonry}>
         {items.map((item, i) => (
@@ -54,7 +54,7 @@ export default function GallerySection() {
             <span className={styles.shade} />
             <span className={styles.kind}>{item.type === 'video' ? 'Film' : 'Photograph'}</span>
             {item.type === 'video' && <span className={styles.play} aria-hidden="true">▶</span>}
-            <span className={styles.caption}><span>{item.title}</span><span aria-hidden="true">↗</span></span>
+            <span className={styles.caption}><span>{item.title}</span></span>
           </button>
         ))}
       </div>
@@ -68,14 +68,15 @@ export default function GallerySection() {
           <div className={styles.viewerTop}><span>KARTURAH <span className={styles.viewerCount}>{String(index + 1).padStart(2, '0')} / {items.length}</span></span><button type="button" autoFocus onClick={() => setActiveId(null)} aria-label="Close gallery">✕</button></div>
           <div className={styles.stage}>
             <button type="button" className={styles.previous} onClick={() => move(-1)} aria-label="Previous item">‹</button>
-            <div className={styles.media} onTouchStart={event => { touchX.current = event.touches[0].clientX; }} onTouchEnd={event => {
+            <div className={styles.media} onTouchStart={event => { touchX.current = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null; }} onTouchEnd={event => {
               if (active.type === 'image' && touchX.current !== null) {
-                const delta = event.changedTouches[0].clientX - touchX.current;
-                if (Math.abs(delta) > 60) move(delta < 0 ? 1 : -1);
+                const delta = event.changedTouches[0].clientX - touchX.current.x;
+                const vertical = event.changedTouches[0].clientY - touchX.current.y;
+                if (Math.abs(delta) > 60 && Math.abs(delta) > Math.abs(vertical) * 1.3) move(delta < 0 ? 1 : -1);
               }
               touchX.current = null;
             }}>
-              {active.type === 'video' ? <video key={active.id} src={active.src} controls playsInline preload="metadata" aria-label={active.title} /> : <img key={active.id} src={active.src} alt={active.title} />}
+              {active.type === 'video' ? <video key={active.id} src={active.src} controls playsInline preload="metadata" aria-label={active.title} /> : <img key={active.id} src={active.src} alt={active.title} draggable={false} />}
             </div>
             <button type="button" className={styles.next} onClick={() => move(1)} aria-label="Next item">›</button>
           </div>
